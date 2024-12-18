@@ -1,8 +1,8 @@
 package org.skypro.skyshop.product;
 
 public class Product {
-    private String name;
-    private int cost;
+    private final String name;
+    private final int cost;
 
     public Product(String name, int cost) {
         this.name = name;
@@ -13,17 +13,10 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
 
     @Override
     public String toString() {
