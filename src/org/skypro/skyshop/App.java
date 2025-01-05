@@ -59,21 +59,12 @@ public class App {
         searchEngine.add(article3);
 
         String searchTerm = "Товар 2";
-        Searchable[] results = searchEngine.search(searchTerm);
-        if (results != null) {
-            for (Searchable searchable : results) {
-                System.out.println(searchable.getSearchTerm());
-            }
+        Searchable searchable = searchEngine.search(searchTerm, product2); // Передаем объект product2
+        if (searchable != null) {
+            System.out.println(searchable.getSearchTerm()); // Исправлена ошибка с getSearchTerm()
         } else {
             System.out.println("Результаты поиска не найдены.");
         }
-
-
-
-
-
-
-
 
     }
 }
