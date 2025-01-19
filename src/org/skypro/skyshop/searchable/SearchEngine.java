@@ -7,8 +7,8 @@ import java.util.List;
 public class SearchEngine {
     private List<Searchable> searchables;
 
-    public SearchEngine(int size) {
-        searchables = new ArrayList<>(size);
+    public SearchEngine() {
+        searchables = new ArrayList<>();
     }
 
     public void add(Searchable searchable) {
@@ -28,29 +28,67 @@ public class SearchEngine {
         }
     }
 
-    public Searchable search(String searchTerm, Searchable searchable) {
-        if (searchable != null && searchable.getSearchTerm().contains(searchTerm)) {
-            return searchable;
-        }
-        return null;
-    }
-
-    public void printContents() {
-        if (searchables.size() == 0) {
-            System.out.println("В поисковой базе данных пусто");
-            return;
-        }
-
-        System.out.println("Содержимое поисковой базы данных:");
+    public Searchable search(String searchTerm) throws BestResultNotFound {
+        Searchable bestMatch = null;
+        int maxRepeats = 0;
 
         for (Searchable searchable : searchables) {
-            if (searchable != null) {
-                System.out.println(searchable.getSearchTerm());
+            int repeats = countRepeats(searchable, searchTerm);
+            if (repeats > maxRepeats) {
+                maxRepeats = repeats;
+                bestMatch = searchable;
             }
+        }
+
+        if (bestMatch == null) {
+            throw new BestResultNotFound("Не найдено подходящего объекта для поиска \"" + searchTerm + "\".");
+        }
+
+        return bestMatch;
+    }
+
+    private int countRepeats(Searchable searchable, String search) {
+        int count = 0;
+        String term = searchable.getSearchTerm();
+        int searchLength = search.length();
+        int termLength = term.length();
+
+        int start = 0;
+        while (true) {
+            int index = term.indexOf(search, start);
+            if (index == -1) {
+                break;
+            }
+            count++;
+            start = index + searchLength;
+        }
+
+        return count;
+    }
+    class BestResultNotFound extends Exception {
+        public BestResultNotFound(String message) {
+            super(message);
         }
     }
 
-    private boolean hasSpaceForSearchable() {
-        return searchables.size() < searchables.size();
+        public void printContents() {
+            if (searchables.size() == 0) {
+                System.out.println("В поисковой базе данных пусто");
+                return;
+            }
+
+            System.out.println("Содержимое поисковой базы данных:");
+
+            for (Searchable searchable : searchables) {
+                if (searchable != null) {
+                    System.out.println(searchable.getSearchTerm());
+                }
+            }
+        }
+
+        private boolean hasSpaceForSearchable() {
+            return searchables.size() < searchables.size();
+        }
     }
-}
+
+

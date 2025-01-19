@@ -9,10 +9,12 @@ import org.skypro.skyshop.searchable.Searchable;
 
 public class App {
     private SearchEngine searchEngine;
+
     public static void main(String[] args) {
         App app = new App();
         app.start();
     }
+
     public void start() {
         /*ProductBasket basket = new ProductBasket();
         Product product1 = new FixPriceProduct("Товар 1");
@@ -36,7 +38,7 @@ public class App {
         boolean containsProduct1InEmptyBasket = basket.containsProduct("Продукт 1");
         System.out.println("Продукт 'Продукт 1' есть в пустой корзине: " + containsProduct1InEmptyBasket);*/
 
-        searchEngine = new SearchEngine(5);
+        /*searchEngine = new SearchEngine(5);
 
         SimpleProduct product1 = new SimpleProduct("Товар 1", 10);
         SimpleProduct product2 = new SimpleProduct("Товар 2", 20);
@@ -59,12 +61,24 @@ public class App {
         searchEngine.add(article3);
 
         String searchTerm = "Товар 2";
-        Searchable searchable = searchEngine.search(searchTerm, product2); // Передаем объект product2
+        Searchable searchable = searchEngine.search(searchTerm, product2);
         if (searchable != null) {
-            System.out.println(searchable.getSearchTerm()); // Исправлена ошибка с getSearchTerm()
+            System.out.println(searchable.getSearchTerm());
         } else {
             System.out.println("Результаты поиска не найдены.");
-        }
+        }   */
+        try {
+            SimpleProduct product1 = new SimpleProduct("Valid Product", 5);
+            DiscountedProduct product2 = new DiscountedProduct("Valid Product", 0, 10);
+            DiscountedProduct product3 = new DiscountedProduct("Valid Product", -5, 10);
+            DiscountedProduct product4 = new DiscountedProduct("Valid Product", 10, 110);
 
+            System.out.println("Product 1: " + product1.getName());
+            System.out.println("Product 2: " + product2.getName());
+            System.out.println("Product 3: " + product3.getName());
+            System.out.println("Product 4: " + product4.getName());
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
