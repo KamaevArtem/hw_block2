@@ -4,19 +4,15 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ProductBasket {
-    private final Product[] products = new Product[5];
-    private int currentProductIndex = 0;
+    private final ArrayList<Product> products = new ArrayList<>();
 
     public void addProduct(Product product) {
-        if (hasSpaceForProduct()) {
-            products[currentProductIndex] = product;
-            currentProductIndex++;
-        } else {
-            System.out.println("Невозможно добавить продукт");
-        }
+        products.add(product);
     }
 
     public int getTotalCost() {
@@ -30,27 +26,26 @@ public class ProductBasket {
     }
 
     public void printContents() {
-        if (products.length == 0) {
+        if (products.size() == 0) {
             System.out.println("в корзине пусто");
             return;
         }
 
         System.out.println("Содержимое корзины:");
 
-        for (int i = 0; i < products.length; i++) {
-            Product product = products[i];
+        for (Product product : products) {
             if (product != null) {
                 System.out.println(product);
             }
         }
         System.out.println("Итого: " + getTotalCost());
         System.out.println("Специальных товаров: " + getSpecialProductCount());
-
     }
+
     private int getSpecialProductCount() {
         int count = 0;
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] != null && products[i].isSpecial()) {
+        for (Product product : products) {
+            if (product != null && product.isSpecial()) {
                 count++;
             }
         }
@@ -67,11 +62,21 @@ public class ProductBasket {
     }
 
     public void clearBasket() {
-        Arrays.fill(products, null);
-        currentProductIndex = 0;
+        products.clear();
     }
 
-    private boolean hasSpaceForProduct() {
-        return currentProductIndex < products.length;
+    public List<Product> removeProductsByName(String name) {
+        List<Product> removedProducts = new ArrayList<>();
+        Iterator<Product> iterator = products.iterator();
+
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getName().equals(name)) {
+                iterator.remove();
+                removedProducts.add(product);
+            }
+        }
+
+        return removedProducts;
     }
 }
