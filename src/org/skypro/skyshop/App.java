@@ -77,7 +77,7 @@ public class App {
             System.err.println(e.getMessage());
         }*/
 
-        ProductBasket basket = new ProductBasket();
+        /*ProductBasket basket = new ProductBasket();
 
         Product product1 = new FixPriceProduct("Товар 1");
         Product product2 = new DiscountedProduct("Товар 2", 20, 50);
@@ -131,6 +131,17 @@ public class App {
             System.out.println(searchable.getSearchTerm());
         }
 
-        searchEngine.printContents();
+        searchEngine.printContents();*/
+
+        SearchEngine searchEngine = new SearchEngine();
+
+        Searchable searchable1 = new SearchableImpl("Объект 1", "Содержание 1", "Наименования 1");
+        Searchable searchable2 = new SearchableImpl("Объект 1", "Содержание 2", "Наименования 2");
+        Searchable searchable3 = new SearchableImpl("Объект 1", "Содержание 3", "Наименования 3");
+        searchEngine.addSearchable(searchable1);
+        searchEngine.addSearchable(searchable2);
+        searchEngine.addSearchable(searchable3);
+        searchEngine.printSearchResults("Содержание");
+
     }
 }
