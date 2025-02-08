@@ -25,4 +25,14 @@ public class SearchableImpl implements Searchable {
     public String getName() {
         return name;
     }
+
+    @Override
+    public int getPrice(){
+        return 0;
+    }
+
+    @Override
+    public boolean isSpecial(){
+        return false;
+    }
 }
